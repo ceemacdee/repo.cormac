@@ -1,0 +1,20 @@
+workflows:
+  ios_build:
+    name: "iOS Build"
+    environment:
+      vars:
+        APP_NAME: "MonkeyPopper"
+      node: latest
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Build iOS app
+        script: |
+          set -o pipefail
+          xcodebuild -workspace MonkeyPopper.xcworkspace \
+                     -scheme MonkeyPopper \
+                     -sdk iphoneos \
+                     -configuration Release \
+                     clean build
+    artifacts:
+      - build/ios/ipa/*.ipa
